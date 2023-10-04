@@ -161,6 +161,7 @@ double mt_genrand_real2(void)
 /* generates a random number on (0,1)-real-interval */
 double mt_genrand_real3(void)
 {
+    //return rand();
     return (((double)mt_genrand_int32()) + 0.5)*(1.0/4294967296.0); 
     /* divided by 2^32 */
 }

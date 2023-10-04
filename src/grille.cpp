@@ -14,17 +14,6 @@ Grille::Grille(int largeur, int hauteur, int nb_individus_max) : nb_individus(nb
 
 Grille::~Grille() 
 {    
-    /*
-    repeat(x, largeur) 
-    {
-        repeat(y, hauteur) 
-        {
-            for (Individu* individu : cellules[x][y]) 
-            {
-                individu;
-            }
-        }
-    }*/
     free(individus);
     individus = null;
 }

@@ -1,5 +1,5 @@
 #include <iostream>
-#include "individu.h"
+#include "individu.hpp"
 
 int main() {
     // Création d'un objet Individu avec des durées de vie initiales

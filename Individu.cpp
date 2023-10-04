@@ -1,4 +1,4 @@
-#include "individu.h"
+#include "individu.hpp"
 #include <unordered_map>
 
 inline std::string statutToString(Statut statut) {

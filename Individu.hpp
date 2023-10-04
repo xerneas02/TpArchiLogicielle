@@ -1,5 +1,3 @@
-// individu.h
-
 #ifndef INDIVIDU_H
 #define INDIVIDU_H
 

@@ -21,6 +21,7 @@
 #include <unordered_map>
 #include <algorithm>
 #include <string>
+#include <math.h>
 
 using std::cout;
 using std::ostream;

@@ -1,5 +1,6 @@
 #include "__base__.hpp"
 #include "simulation.hpp"
+#include "individu.hpp"
 
 #if 0
 void test_mathis()

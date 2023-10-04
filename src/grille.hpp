@@ -25,6 +25,10 @@ public:
     void moveIndividuRngPos(int idx);
     void ajouterIndividu(int idx, int x, int y);
 
+    void avanceTemps();
+
+    int countAdj(int x, int y);
+
     // Déplacer tous les individus aléatoirement dans la grille
     void deplacerIndividus();
     void reset(int nb_infected, int dE, int dI, int dR);

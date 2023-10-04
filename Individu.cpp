@@ -1,7 +1,23 @@
 #include "individu.h"
 #include <unordered_map>
 
+inline std::string statutToString(Statut statut) {
+    switch (statut) {
+        case Statut::Susceptible: return "Susceptible";
+        case Statut::Exposed: return "Exposed";
+        case Statut::Infected: return "Infected";
+        case Statut::Recovered: return "Recovered";
+        default: return "Unknown";
+    }
+}
+
+std::ostream& operator<<(std::ostream& os, Statut statut) {
+    return os << statutToString(statut);
+}
+
 Individu::Individu(){
+    tempsPasseDansStatut = 0;
+    statut = Statut::Susceptible;
     setDureeDeVie(Statut::Susceptible, -1);
     setDureeDeVie(Statut::Exposed, -1);
     setDureeDeVie(Statut::Infected, -1);
@@ -9,6 +25,8 @@ Individu::Individu(){
 }
 
 Individu::Individu(int dE, int dI, int dR){
+    tempsPasseDansStatut = 0;
+    statut = Statut::Susceptible;
     setDureeDeVie(Statut::Susceptible, -1);
     setDureeDeVie(Statut::Exposed, dE);
     setDureeDeVie(Statut::Infected, dI);
@@ -30,7 +48,7 @@ int Individu::getTempsPasseDansStatut() const {
 void Individu::avanceTemps(){
     tempsPasseDansStatut++;
 
-    if (tempsPasseDansStatut >= dureesDeVie[statut]){
+    if (dureesDeVie[statut] != -1 && tempsPasseDansStatut >= dureesDeVie[statut]){
         statut = statutSuivant[statut];
         tempsPasseDansStatut = 0;
     }

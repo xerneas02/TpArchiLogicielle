@@ -3,6 +3,7 @@
 #ifndef INDIVIDU_H
 #define INDIVIDU_H
 
+#include <string>
 #include <unordered_map>
 
 // Déclaration de l'énumération pour le statut
@@ -12,6 +13,8 @@ enum class Statut {
     Infected,
     Recovered
 };
+
+std::ostream& operator<<(std::ostream& os, Statut statut);
 
 
 class Individu {

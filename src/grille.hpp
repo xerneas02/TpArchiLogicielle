@@ -35,10 +35,11 @@ public:
     int countInfected();
     int nbIndividus();
 
-    int countAdj(int x, int y);
+    int countVoisinsInfectees(int x, int y);
 
     // Déplacer tous les individus aléatoirement dans la grille
     void deplacerIndividus();
+    void propagation();
     void reset(int nb_infected, int dE, int dI, int dR);
 };
 

@@ -65,9 +65,9 @@ Grille::~Grille()
 
 void Grille::ajouterIndividu(int idx, int x, int y) 
 {
-    getCell(x,y).push_back(&individus[idx]);
     individus[idx].x = x;
     individus[idx].y = y;
+    getCell(x,y).push_back(&individus[idx]);
 }
 
 int Grille::rngX() { return mt_genrand_int32() % longueur; }
@@ -80,7 +80,8 @@ void Grille::moveIndividuRngPos(int idx)
     int nouvelleY = rngY();
 
     Individu* individu = &individus[idx];
-    auto c = getCell(individu->x, individu->y);
+    // auto is a joke
+    vector<Individu*>& c = getCell(individu->x, individu->y);
     // joy of C++...
     c.erase(std::find(c.begin(), c.end(), individu));
     ajouterIndividu(idx, nouvelleX, nouvelleY);
@@ -98,40 +99,49 @@ void Grille::deplacerIndividus()
     }
 }
 
-int Grille::countAdj(int x, int y)
+void Grille::propagation()
 {
-    int nVoisin = 0;
-    for (int i = x - 1; i <= x + 1; ++i) 
-    {
-        for (int j = y - 1; j <= y + 1; ++j) 
-        {
-            int x_tore = (i + longueur) % longueur;
-            int y_tore = (j + hauteur) % hauteur;
+    int nbVoisinInfected;
 
-            nVoisin += getCell(x_tore,y_tore).size();
-        }
-    }
-    return nVoisin;
-}
-
-
-void Grille::avanceTemps()
-{    
-    int nVoisin, proba;
     repeat(i, nb_individus)
     {
         if (individus[i].statut == Statut::Susceptible)
         { 
-            nVoisin = countAdj(individus[i].x, individus[i].y);
-            proba   = 1 - exp(-0.5*nVoisin);
+            nbVoisinInfected = countVoisinsInfectees(individus[i].x, individus[i].y);
+            auto proba   = 1 - exp(-0.5*nbVoisinInfected);
 
-            if (proba < mt_genrand_real1())
+            if (proba > mt_genrand_real1())
             {
                 individus[i].setStatut(Statut::Exposed);
             }
         }
     }
+}
 
+
+int Grille::countVoisinsInfectees(int x, int y)
+{
+    int nbInfected = 0;
+    for (int i = x - 1; i <= x + 1; i-=-1) 
+    {
+        for (int j = y - 1; j <= y + 1; j-=-1) 
+        {
+            int x_tore = (i + longueur) % longueur;
+            int y_tore = (j + hauteur ) % hauteur;
+
+            for(auto v : getCell(x_tore,y_tore))
+            {
+                if(v->getStatut() == Statut::Infected){ nbInfected++; }
+            }
+        }
+    }
+    return nbInfected;
+}
+
+
+void Grille::avanceTemps()
+{    
+    propagation();
     deplacerIndividus();
 }
 

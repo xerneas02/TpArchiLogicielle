@@ -53,7 +53,8 @@ void test_mathis()
 
 void test_simulation()
 {
-    Simulation s = Simulation(64, 12, 96, 10);
+    //Simulation s = Simulation(64, 12, 96, 10);
+    Simulation s = Simulation();
     s.simuler();
 }
 
@@ -68,5 +69,6 @@ int main(int argc, char const* argv[])
 
     test_simulation();
 
+    printf("Done !");
     return 0;
 }

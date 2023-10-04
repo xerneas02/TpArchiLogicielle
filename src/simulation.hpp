@@ -18,6 +18,9 @@ private:
     int dI = 7;
     int dR = 365;
     int tour;
+    file* result;
+
+    void fileSaveStep();
 
 public:
     Simulation(int longueur = 300, int hauteur = 300, int nb_individus_max = 20000, int nb_individus_infected = 20, int dE = 3, int dI = 7, int dR = 365);

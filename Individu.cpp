@@ -39,10 +39,9 @@ void Individu::avanceTemps(){
 int Individu::getDureeDeVie(Statut statut) const {
     auto it = dureesDeVie.find(statut);
     if (it != dureesDeVie.end()) {
-        return it->second; // Retourne la durée de vie associée au statut
+        return it->second; //Accée à la second partie de l'iterateur (la valeur)
     } else {
-        // Gérer le cas où le statut n'existe pas (peut être une valeur par défaut)
-        return 0; // Par exemple, retourne 0 pour indiquer aucune durée de vie
+        return 0;
     }
 }
 

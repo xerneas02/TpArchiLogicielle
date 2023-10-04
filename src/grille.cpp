@@ -43,3 +43,37 @@ void Grille::deplacerIndividus()
         ajouterIndividu(i, nouvelleX, nouvelleY);
     }
 }
+
+int Grille::countAdj(int x, int y){
+    int nVoisin = 0;
+    for (int i = x - 1; i <= x + 1; ++i) {
+        for (int j = y - 1; j <= y + 1; ++j) {
+            int x_tore = (i + largeur) % largeur;
+            int y_tore = (j + hauteur) % hauteur;
+
+            nVoisin += cellules[x][y].size();
+        }
+    }
+    return nVoisin;
+}
+
+
+void Grille::avanceTemps()
+{    
+    int nVoisin, proba;
+    repeat(i, nb_individus)
+    {
+        if (individus[i].statut == Statut::Susceptible)
+        { 
+            nVoisin = countAdj(individus[i].x, individus[i].y);
+            proba   = 1 - exp(-0.5*nVoisin);
+
+            if (proba < mt_genrand_real1())
+            {
+                individus[i].setStatut(Statut::Exposed);
+            }
+        }
+    }
+
+    deplacerIndividus();
+}

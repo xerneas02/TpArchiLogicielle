@@ -1,5 +1,5 @@
 #include "__base__.hpp"
-#include "Individu.hpp"
+#include "individu.hpp"
 
 int main() 
 {

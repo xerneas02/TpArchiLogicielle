@@ -21,6 +21,10 @@ public:
     // Ajouter un individu à la grille
     void ajouterIndividu(int idx, int x, int y);
 
+    void avanceTemps();
+
+    int countAdj(int x, int y);
+
     // Déplacer tous les individus aléatoirement dans la grille
     void deplacerIndividus();
 };

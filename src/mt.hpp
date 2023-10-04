@@ -42,6 +42,7 @@
    http://www.math.sci.hiroshima-u.ac.jp/~m-mat/MT/emt.html
    email: m-mat @ math.sci.hiroshima-u.ac.jp (remove space)
 */
+#include "__base__.hpp"
 
 /* initializes mt[N] with a seed */
 void mt_init_genrand(unsigned long s);
@@ -72,3 +73,6 @@ double mt_genrand_real3(void);
 double mt_genrand_res53(void);
 
 int mt_uniform(int a, int b);
+
+double mt_neg_exp(double mean);
+double mt_neg_exp(double mean, double rng_val_strictly_positive);

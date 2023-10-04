@@ -2,17 +2,46 @@
 #include "grille.hpp"
 #include "mt.hpp"
 
-Grille::Grille(int largeur, int hauteur, int nb_individus_max) : nb_individus(nb_individus_max), largeur(largeur), hauteur(hauteur) 
+Grille::Grille(int longueur, int hauteur, int nb_individus_max) : 
+    nb_individus(nb_individus_max), 
+    longueur(longueur), 
+    hauteur(hauteur) 
 {
+    check(longueur > 0);
+    check(hauteur > 0);
+    check(nb_individus_max > 0);
+
+    cellules1D = vector<vector<Individu*>>(longueur*hauteur);
+    repeat(x, longueur)
+    {
+        repeat(y, hauteur)
+        {
+            cellules1D.push_back(vector<Individu*>(8));
+        }
+    }
+
     individus = make_array(Individu, nb_individus_max);
-    cellules.resize(largeur, vector<vector<Individu*>>(hauteur));
+    repeat(i, nb_individus_max){ individus[i] = Individu(); }
 }
+
+vector<Individu*>& Grille::getCell(int x, int y)
+{
+    return cellules1D[y*longueur+x];
+}
+
 
 void Grille::reset(int nb_infected, int dE, int dI, int dR)
 {
+    repeat(x, longueur)
+    {
+        repeat(y, hauteur)
+        {
+            getCell(x,y).clear();
+        }
+    }
     repeat(i, nb_individus)
     {
-        moveIndividuRngPos(i);
+        ajouterIndividu(i, rngX(), rngY());
         individus[i].reset(dE, dI, dR);
     }
     repeat(i, nb_infected)
@@ -22,24 +51,36 @@ void Grille::reset(int nb_infected, int dE, int dI, int dR)
 }
 
 Grille::~Grille() 
-{    
+{       
+    while(!cellules1D.empty())
+    {
+        cellules1D.pop_back();
+    }
     free(individus);
+    longueur = 0;
+    hauteur = 0;
+    nb_individus = 0;
     individus = null;
 }
 
 void Grille::ajouterIndividu(int idx, int x, int y) 
 {
-    cellules[x][y].push_back(&individus[idx]);
+    getCell(x,y).push_back(&individus[idx]);
+    individus[idx].x = x;
+    individus[idx].y = y;
 }
+
+int Grille::rngX() { return mt_genrand_int32() % longueur; }
+int Grille::rngY() { return mt_genrand_int32() % hauteur; }
 
 void Grille::moveIndividuRngPos(int idx)
 {
     // Obtenir les nouvelles coordonnées pour l'individu
-    int nouvelleX = mt_genrand_int32() % largeur;
-    int nouvelleY = mt_genrand_int32() % hauteur;
+    int nouvelleX = rngX();
+    int nouvelleY = rngY();
 
     Individu* individu = &individus[idx];
-    auto c = cellules[individu->x][individu->y];
+    auto c = getCell(individu->x, individu->y);
     // joy of C++...
     c.erase(std::find(c.begin(), c.end(), individu));
     ajouterIndividu(idx, nouvelleX, nouvelleY);
@@ -49,22 +90,25 @@ void Grille::deplacerIndividus()
 {
     repeat(i, nb_individus)
     {
-        Individu* individu = &individus[i];
+        Individu& individu = individus[i];
 
         // Avancez le temps de l'individu
-        individu->avanceTemps();
+        individu.avanceTemps();
         moveIndividuRngPos(i);
     }
 }
 
-int Grille::countAdj(int x, int y){
+int Grille::countAdj(int x, int y)
+{
     int nVoisin = 0;
-    for (int i = x - 1; i <= x + 1; ++i) {
-        for (int j = y - 1; j <= y + 1; ++j) {
-            int x_tore = (i + largeur) % largeur;
+    for (int i = x - 1; i <= x + 1; ++i) 
+    {
+        for (int j = y - 1; j <= y + 1; ++j) 
+        {
+            int x_tore = (i + longueur) % longueur;
             int y_tore = (j + hauteur) % hauteur;
 
-            nVoisin += cellules[x_tore][y_tore].size();
+            nVoisin += getCell(x_tore,y_tore).size();
         }
     }
     return nVoisin;
@@ -90,3 +134,14 @@ void Grille::avanceTemps()
 
     deplacerIndividus();
 }
+
+int Grille::countInfected()
+{
+    int s = 0;
+    repeat(i, nb_individus)
+    {
+        if(individus[i].getStatut() == Statut::Infected){ s++; }
+    }
+    return s;
+}
+int Grille::nbIndividus(){ return nb_individus; }

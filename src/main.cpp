@@ -53,7 +53,7 @@ void test_mathis()
 
 void test_simulation()
 {
-    Simulation s = Simulation(64, 32, 360, 10);
+    Simulation s = Simulation(64, 12, 96, 10);
     s.simuler();
 }
 
@@ -62,6 +62,9 @@ int main(int argc, char const* argv[])
     unused(argc);
     unused(argv);
     printf("%sCompilation%s de %s \n", COLOR_DEBUG_CATEGORY, COLOR_RESET, current_time);
+
+    unsigned long init[4]={0x123, 0x234, 0x345, 0x456}, length=4;
+    mt_init_by_array(init, length);
 
     test_simulation();
 

@@ -2,14 +2,17 @@
 #include "grille.hpp"
 #include "mt.hpp"
 
-Simulation::Simulation(int largeur = 300, int hauteur = 300, int nb_individus_max = 20000, int nb_individus_infected = 20, int dE = 3, int dI = 7, int dR = 365) :
+Simulation::Simulation(int longueur, int hauteur, int nb_individus_max, int nb_individus_infected, int dE, int dI, int dR) :
+    grid(longueur, hauteur, nb_individus_max),
     nb_individus_infected(nb_individus_infected),
     dE(dE),
     dI(dI),
-    dR(dR),
+    dR(dR)
 {
-    grid = Grille(largeur, hauteur, nb_individus_max);
-    nb_individus_infected = nb_individus_infected;
+    check(nb_individus_max-nb_individus_infected >= 0);
+    check(dE > 0);
+    check(dI > 0);
+    check(dR > 0);
     reset();
 }
 
@@ -17,28 +20,31 @@ Simulation::~Simulation() {}
 
 void Simulation::reset() 
 {
+    tour = 0;
     grid.reset(nb_individus_infected, dE, dI, dR);
 }
 
 void Simulation::afficher()
 {
+    cout <<  endl << endl;
+
     #define bordure_couleur COLOR_FOREGROUND_CYAN 
     cout << bordure_couleur;
-    repeat(x, grid.largeur+2) { cout << "#"; }
+    repeat(x, grid.longueur+2) { cout << "#"; }
     cout << '\n';
 
     repeat(y, grid.hauteur) 
     { 
         cout << bordure_couleur << "#" << COLOR_RESET;
 
-        repeat(x, grid.largeur) 
+        repeat(x, grid.longueur) 
         {
-            if(grid.cellules[x][y].size() == 0)
+            if(grid.getCell(x,y).size() == 0)
             {
                 cout << ' ';
             }else
             {
-                switch (grid.cellules[x][y].back()->getStatut())
+                switch (grid.getCell(x,y).back()->getStatut())
                 {
                     case Statut::Exposed: cout << COLOR_FOREGROUND_MAGENTA << "E";  break;
                     case Statut::Infected: cout << COLOR_FOREGROUND_RED << "I";  break;
@@ -48,11 +54,13 @@ void Simulation::afficher()
                 }
             }
         }
-        cout << '\n';
-        cout << bordure_couleur << "#" << COLOR_RESET;
+        cout << bordure_couleur << "#" << COLOR_RESET << '\n';
     }
-    repeat(x, grid.largeur+2) { cout << bordure_couleur << "#" << COLOR_RESET; }
-    cout << endl;
+    repeat(x, grid.longueur+2) { cout << bordure_couleur << "#"; }
+    cout << COLOR_RESET << '\n';
+
+    int nbInfected = grid.countInfected();
+    cout <<  "tour " << tour << ", " << nbInfected << " / " <<grid.nbIndividus() << " ( " << nbInfected*100.0/grid.nbIndividus() << " % ) infected" << endl;
 }
 
 
@@ -60,7 +68,8 @@ void Simulation::simuler(int nb_iteration)
 {
     repeat(i, nb_iteration)
     {
-        grid.avanceTemps();
         afficher();
+        tour++;
+        grid.avanceTemps();
     }
 }

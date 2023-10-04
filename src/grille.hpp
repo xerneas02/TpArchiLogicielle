@@ -13,12 +13,17 @@ private:
     int nb_individus;
     Individu* individus;
 
-    int largeur;
+    int longueur;
     int hauteur;
-    vector<vector<vector<Individu*>>> cellules; // Structure de données pour stocker les individus
+
+    vector<vector<Individu*>> cellules1D;
+    vector<Individu*>& getCell(int x, int y);
+
+    int rngX();
+    int rngY();
 
 public:
-    Grille(int largeur, int hauteur, int nb_individus_max);
+    Grille(int longueur, int hauteur, int nb_individus_max);
     ~Grille();
 
     // Ajouter un individu à la grille
@@ -26,6 +31,9 @@ public:
     void ajouterIndividu(int idx, int x, int y);
 
     void avanceTemps();
+
+    int countInfected();
+    int nbIndividus();
 
     int countAdj(int x, int y);
 

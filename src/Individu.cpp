@@ -17,16 +17,16 @@ std::ostream& operator<<(std::ostream& os, Statut statut)
     return os << statutToString(statut);
 }
 
-Individu::Individu(){}
+Individu::Individu(){ x = 0; y = 0;}
 
 void Individu::reset(int dE, int dI, int dR)
 {
     tempsPasseDansStatut = 0;
     statut               = Statut::Susceptible;
     setDureeDeVie(Statut::Susceptible, -1);
-    setDureeDeVie(Statut::Exposed,     negExp(dE));
-    setDureeDeVie(Statut::Infected,    negExp(dI));
-    setDureeDeVie(Statut::Recovered,   negExp(dR));
+    setDureeDeVie(Statut::Exposed,    (int)mt_neg_exp(dE));
+    setDureeDeVie(Statut::Infected,   (int)mt_neg_exp(dI));
+    setDureeDeVie(Statut::Recovered,  (int)mt_neg_exp(dR));
 }
 
 Statut Individu::getStatut() const 

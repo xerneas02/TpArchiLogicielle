@@ -3,6 +3,8 @@
         "memory": "cpp",
         "vector": "cpp",
         "iosfwd": "cpp",
-        "iostream": "cpp"
+        "iostream": "cpp",
+        "cmath": "cpp",
+        "ostream": "cpp"
     }
 }

@@ -1,25 +1,28 @@
 #ifndef GRILLE_H
 #define GRILLE_H
 
-#include <vector>
+#include "__base__.hpp"
 #include "individu.hpp"
+#include "mt.hpp"
+class Grille 
+{
+private:
+    int nb_individus;
+    Individu* individus;
 
-class Grille {
+    int largeur;
+    int hauteur;
+    vector<vector<vector<Individu*>>> cellules; // Structure de données pour stocker les individus
+
 public:
-    Grille(int largeur, int hauteur);
+    Grille(int largeur, int hauteur, int nb_individus_max);
     ~Grille();
 
     // Ajouter un individu à la grille
-    void ajouterIndividu(Individu* individu, int x, int y);
+    void ajouterIndividu(int idx, int x, int y);
 
     // Déplacer tous les individus aléatoirement dans la grille
     void deplacerIndividus();
-
-private:
-    int largeur;
-    int hauteur;
-    std::vector<std::vector<std::vector<Individu*>>> cellules; // Structure de données pour stocker les individus
-    
 };
 
 #endif // GRILLE_H

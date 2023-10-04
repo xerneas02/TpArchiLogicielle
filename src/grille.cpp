@@ -2,43 +2,55 @@
 #include "mt.hpp"
 #include <vector>
 
-Grille::Grille(int largeur, int hauteur) : largeur(largeur), hauteur(hauteur) {
-    cellules.resize(largeur, std::vector<std::vector<Individu*>>(hauteur));
-}
-
-Grille::~Grille() {
-    for (int x = 0; x < largeur; ++x) {
-        for (int y = 0; y < hauteur; ++y) {
-            for (Individu* individu : cellules[x][y]) {
-                delete individu;
-            }
-        }
+Grille::Grille(int largeur, int hauteur, int nb_individus_max) : nb_individus(nb_individus_max), largeur(largeur), hauteur(hauteur) 
+{
+    individus = make_array(Individu, nb_individus_max);
+    repeat(i, nb_individus_max)
+    {
+        individus[i] = Individu(0,0,1,1,1);
     }
+    cellules.resize(largeur, vector<vector<Individu*>>(hauteur));
 }
 
-void Grille::ajouterIndividu(Individu* individu, int x, int y) {
-    cellules[x][y].push_back(individu);
-}
-
-void Grille::deplacerIndividus() {
-    for (int i = 0; i < largeur; ++i) {
-        for (int j = 0; j < hauteur; ++j) {
-            for (auto it = cellules[i][j].begin(); it != cellules[i][j].end();) {
-                Individu* individu = *it;
-
-                // Avancez le temps de l'individu
-                individu->avanceTemps();
-
-                // Obtenir les nouvelles coordonnées pour l'individu
-                int nouvelleX = mt_uniform(0, largeur);
-                int nouvelleY = mt_uniform(0, hauteur);
-
-                it = cellules[i][j].erase(it);
-
-                // Déplacez l'individu aux nouvelles coordonnées
-                ajouterIndividu(individu, nouvelleX, nouvelleY);
-
+Grille::~Grille() 
+{    
+    /*
+    repeat(x, largeur) 
+    {
+        repeat(y, hauteur) 
+        {
+            for (Individu* individu : cellules[x][y]) 
+            {
+                individu;
             }
         }
+    }*/
+    free(individus);
+    individus = null;
+}
+
+void Grille::ajouterIndividu(int idx, int x, int y) 
+{
+    cellules[x][y].push_back(&individus[idx]);
+}
+
+void Grille::deplacerIndividus() 
+{
+    repeat(i, nb_individus)
+    {
+        Individu* individu = &individus[i];
+
+        // Avancez le temps de l'individu
+        individu->avanceTemps();
+
+        // Obtenir les nouvelles coordonnées pour l'individu
+        int nouvelleX = mt_genrand_int32() % largeur;
+        int nouvelleY = mt_genrand_int32() % hauteur;
+        ;
+        
+        auto c = cellules[individu->x][individu->y];
+        // joy of C++...
+        c.erase(std::find(c.begin(), c.end(), individu));
+        ajouterIndividu(i, nouvelleX, nouvelleY);
     }
 }

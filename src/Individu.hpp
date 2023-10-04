@@ -1,55 +1,51 @@
 #ifndef INDIVIDU_H
 #define INDIVIDU_H
 
-#include <string>
-#include <unordered_map>
+#include "__base__.hpp"
+#include "mt.hpp"
 
 // Déclaration de l'énumération pour le statut
-enum class Statut {
-    Susceptible,
-    Exposed,
-    Infected,
-    Recovered
+enum class Statut
+{
+    Susceptible = 0,
+    Exposed = 1,
+    Infected = 2,
+    Recovered = 3,
 };
 
-std::ostream& operator<<(std::ostream& os, Statut statut);
+ostream& operator<<(ostream& os, Statut statut);
 
 
-class Individu {
+class Individu 
+{
+    friend class Grille;
+
+private:
+    int x;
+    int y;
+
+    Statut statut;
+
+    int tempsPasseDansStatut; //Temps ecoulé dans le statut courrant en jour
+    int dureesDeVie[4]; // Durées de vie des differents status
+
 public:
-    Individu();
-    Individu(int dE, int dI, int dR);
+    Individu(int x, int y, int dE, int dI, int dR);
 
 
     Statut getStatut() const;
-
     void setStatut(Statut nouveauStatut);
-
 
     int getTempsPasseDansStatut() const;
 
-
     int getDureeDeVie(Statut statut) const;
-
     void setDureeDeVie(Statut statut, int duree);
 
     void avanceTemps();
 
-
 private:
-    Statut statut;
-
-    int tempsPasseDansStatut; //Temps ecoulé dans le statut courrant en jour
-
-    std::unordered_map<Statut, int> dureesDeVie; // Durées de vie des differents status
-
-    std::unordered_map<Statut, Statut> statutSuivant = {
-        {Statut::Susceptible, Statut::Exposed    }, 
-        {Statut::Exposed,     Statut::Infected   },      
-        {Statut::Infected,    Statut::Recovered  },
-        {Statut::Recovered,   Statut::Susceptible}
-    };
-
+    Statut statutSuivant(Statut s);
+    int statutDureesDeVie();
 };
 
 

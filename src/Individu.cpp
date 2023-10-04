@@ -1,69 +1,70 @@
 #include "individu.hpp"
-#include <unordered_map>
 
-inline std::string statutToString(Statut statut) {
-    switch (statut) {
+inline string statutToString(Statut statut) 
+{
+    switch (statut) 
+    {
         case Statut::Susceptible: return "Susceptible";
-        case Statut::Exposed: return "Exposed";
-        case Statut::Infected: return "Infected";
-        case Statut::Recovered: return "Recovered";
+        case Statut::Exposed:     return "Exposed";
+        case Statut::Infected:    return "Infected";
+        case Statut::Recovered:   return "Recovered";
         default: return "Unknown";
     }
 }
 
-std::ostream& operator<<(std::ostream& os, Statut statut) {
+std::ostream& operator<<(std::ostream& os, Statut statut) 
+{
     return os << statutToString(statut);
 }
 
-Individu::Individu(){
+Individu::Individu(int x, int y, int dE, int dI, int dR) : x(x), y(y)
+{
     tempsPasseDansStatut = 0;
-    statut = Statut::Susceptible;
+    statut               = Statut::Susceptible;
     setDureeDeVie(Statut::Susceptible, -1);
-    setDureeDeVie(Statut::Exposed, -1);
-    setDureeDeVie(Statut::Infected, -1);
-    setDureeDeVie(Statut::Recovered, -1);
+    setDureeDeVie(Statut::Exposed,     dE);
+    setDureeDeVie(Statut::Infected,    dI);
+    setDureeDeVie(Statut::Recovered,   dR);
 }
 
-Individu::Individu(int dE, int dI, int dR){
-    tempsPasseDansStatut = 0;
-    statut = Statut::Susceptible;
-    setDureeDeVie(Statut::Susceptible, -1);
-    setDureeDeVie(Statut::Exposed, dE);
-    setDureeDeVie(Statut::Infected, dI);
-    setDureeDeVie(Statut::Recovered, dR);
-}
-
-Statut Individu::getStatut() const {
+Statut Individu::getStatut() const 
+{
     return statut;
 }
 
-void Individu::setStatut(Statut nouveauStatut) {
+void Individu::setStatut(Statut nouveauStatut) 
+{
     statut = nouveauStatut;
 }
 
-int Individu::getTempsPasseDansStatut() const {
+int Individu::getTempsPasseDansStatut() const 
+{
     return tempsPasseDansStatut;
 }
 
-void Individu::avanceTemps(){
+void Individu::avanceTemps()
+{
     tempsPasseDansStatut++;
 
-    if (dureesDeVie[statut] != -1 && tempsPasseDansStatut >= dureesDeVie[statut]){
-        statut = statutSuivant[statut];
+    if (getDureeDeVie(statut) != -1 && tempsPasseDansStatut >= getDureeDeVie(statut))
+    {
+        statut = statutSuivant(statut);
         tempsPasseDansStatut = 0;
     }
 }
 
-int Individu::getDureeDeVie(Statut statut) const {
-    auto it = dureesDeVie.find(statut);
-    if (it != dureesDeVie.end()) {
-        return it->second; //Accée à la second partie de l'iterateur (la valeur)
-    } else {
-        return 0;
-    }
+int Individu::getDureeDeVie(Statut statut) const 
+{
+    return dureesDeVie[(int)statut];
 }
 
-void Individu::setDureeDeVie(Statut statut, int duree){
-    dureesDeVie[statut] = duree;
+void Individu::setDureeDeVie(Statut statut, int duree)
+{
+    dureesDeVie[(int)statut] = duree;
 }
 
+
+Statut Individu::statutSuivant(Statut s)
+{
+    return (Statut)(((int)s+1) % 4);
+}

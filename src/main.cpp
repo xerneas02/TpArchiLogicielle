@@ -1,49 +1,50 @@
-#include <iostream>
-#include "individu.hpp"
+#include "__base__.hpp"
+#include "Individu.hpp"
 
-int main() {
+int main() 
+{
     // Création d'un objet Individu avec des durées de vie initiales
-    Individu individu(2, 3, 5);
+    Individu individu(0, 0, 2, 3, 5);
     
-
     // Obtention du statut initial
-    std::cout << "Statut initial : " << individu.getStatut() << std::endl;
+    cout << "Statut initial : " << individu.getStatut() << endl;
     // Obtention des nouvelles durées de vie
-    std::cout << "Nouvelle durée de vie pour Exposed : " << individu.getDureeDeVie(Statut::Exposed) << " jour" << std::endl;
-    std::cout << "Nouvelle durée de vie pour Infected : " << individu.getDureeDeVie(Statut::Infected) << " jours" << std::endl;
-    std::cout << "Nouvelle durée de vie pour Recovered : " << individu.getDureeDeVie(Statut::Recovered) << " jours" << std::endl;
+    cout << "Nouvelle durée de vie pour Exposed : " << individu.getDureeDeVie(Statut::Exposed) << " jour" << endl;
+    cout << "Nouvelle durée de vie pour Infected : " << individu.getDureeDeVie(Statut::Infected) << " jours" << endl;
+    cout << "Nouvelle durée de vie pour Recovered : " << individu.getDureeDeVie(Statut::Recovered) << " jours" << endl;
 
     individu.setStatut(Statut::Exposed);
 
-    std::cout << "Nouveau statut : " << individu.getStatut() << std::endl;
+    cout << "Nouveau statut : " << individu.getStatut() << endl;
     // Avance du temps de 4 jours
-    for (int i = 0; i < 4; ++i) {
+    repeat(i, 4) 
+    {
         individu.avanceTemps();
     }
 
     // Obtention du nouveau statut et de la durée de vie dans le statut actuel
-    std::cout << "Nouveau statut : " << individu.getStatut() << std::endl;
-    std::cout << "Temps passé dans le statut actuel : " << individu.getTempsPasseDansStatut() << " jours" << std::endl;
+    cout << "Nouveau statut : " << individu.getStatut() << endl;
+    cout << "Temps passé dans le statut actuel : " << individu.getTempsPasseDansStatut() << " jours" << endl;
 
     // Avance du temps de 4 jours
-    for (int i = 0; i < 4; ++i) {
+    repeat(i, 4) 
+     {
         individu.avanceTemps();
     }
 
     // Obtention du nouveau statut et de la durée de vie dans le statut actuel
-    std::cout << "Nouveau statut : " << individu.getStatut() << std::endl;
-    std::cout << "Temps passé dans le statut actuel : " << individu.getTempsPasseDansStatut() << " jours" << std::endl;
+    cout << "Nouveau statut : " << individu.getStatut() << endl;
+    cout << "Temps passé dans le statut actuel : " << individu.getTempsPasseDansStatut() << " jours" << endl;
 
     // Avance du temps de 10 jours
-    for (int i = 0; i < 10; ++i) {
+    repeat(i, 10)
+    {
         individu.avanceTemps();
     }
 
     // Obtention du nouveau statut et de la durée de vie dans le statut actuel
-    std::cout << "Nouveau statut : " << individu.getStatut() << std::endl;
-    std::cout << "Temps passé dans le statut actuel : " << individu.getTempsPasseDansStatut() << " jours" << std::endl;
-
-
+    cout << "Nouveau statut : " << individu.getStatut() << endl;
+    cout << "Temps passé dans le statut actuel : " << individu.getTempsPasseDansStatut() << " jours" << endl;
 
     return 0;
 }

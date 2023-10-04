@@ -1,7 +1,19 @@
 #include "individu.h"
+#include <unordered_map>
 
-// Constructeur avec paramètres
-Individu::Individu(int dE, int dI, int dR) : dE(dE), dI(dI), dR(dE) {}
+Individu::Individu(){
+    setDureeDeVie(Statut::Susceptible, -1);
+    setDureeDeVie(Statut::Exposed, -1);
+    setDureeDeVie(Statut::Infected, -1);
+    setDureeDeVie(Statut::Recovered, -1);
+}
+
+Individu::Individu(int dE, int dI, int dR){
+    setDureeDeVie(Statut::Susceptible, -1);
+    setDureeDeVie(Statut::Exposed, dE);
+    setDureeDeVie(Statut::Infected, dI);
+    setDureeDeVie(Statut::Recovered, dR);
+}
 
 Statut Individu::getStatut() const {
     return statut;
@@ -15,31 +27,26 @@ int Individu::getTempsPasseDansStatut() const {
     return tempsPasseDansStatut;
 }
 
-void Individu::setTempsPasseDansStatut(int temps) {
-    tempsPasseDansStatut = temps;
+void Individu::avanceTemps(){
+    tempsPasseDansStatut++;
+
+    if (tempsPasseDansStatut >= dureesDeVie[statut]){
+        statut = statutSuivant[statut];
+        tempsPasseDansStatut = 0;
+    }
 }
 
-int Individu::getDE() const {
-    return dE;
+int Individu::getDureeDeVie(Statut statut) const {
+    auto it = dureesDeVie.find(statut);
+    if (it != dureesDeVie.end()) {
+        return it->second; // Retourne la durée de vie associée au statut
+    } else {
+        // Gérer le cas où le statut n'existe pas (peut être une valeur par défaut)
+        return 0; // Par exemple, retourne 0 pour indiquer aucune durée de vie
+    }
 }
 
-int Individu::getDI() const {
-    return dI;
-}
-
-int Individu::getDR() const {
-    return dR;
-}
-
-void Individu::setDE(int duree) {
-    dE = duree;
-}
-
-void Individu::setDI(int duree) {
-    dI = duree;
-}
-
-void Individu::setDR(int duree) {
-    dR = duree;
+void Individu::setDureeDeVie(Statut statut, int duree){
+    dureesDeVie[statut] = duree;
 }
 

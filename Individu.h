@@ -3,6 +3,8 @@
 #ifndef INDIVIDU_H
 #define INDIVIDU_H
 
+#include <unordered_map>
+
 // Déclaration de l'énumération pour le statut
 enum class Statut {
     Susceptible,
@@ -25,26 +27,28 @@ public:
 
     int getTempsPasseDansStatut() const;
 
-    void setTempsPasseDansStatut(int temps);
 
+    int getDureeDeVie(Statut statut) const;
 
-    int getDE() const;
-    int getDI() const;
-    int getDR() const;
+    void setDureeDeVie(Statut statut, int duree);
 
-    void setDE(int duree);
-    void setDI(int duree);
-    void setDR(int duree);
+    void avanceTemps();
 
 
 private:
     Statut statut;
 
-    int tempsPasseDansStatut; //Temps ecoulé dans le statut courrant
+    int tempsPasseDansStatut; //Temps ecoulé dans le statut courrant en jour
 
-    int dE; //Durré de vie statut Exposed
-    int dI; //Durré de vie statut Infected
-    int dR; //Durré de vie statut Recovered
+    std::unordered_map<Statut, int> dureesDeVie; // Durées de vie des differents status
+
+    std::unordered_map<Statut, Statut> statutSuivant = {
+        {Statut::Susceptible, Statut::Exposed    }, 
+        {Statut::Exposed,     Statut::Infected   },      
+        {Statut::Infected,    Statut::Recovered  },
+        {Statut::Recovered,   Statut::Susceptible}
+    };
+
 };
 
 

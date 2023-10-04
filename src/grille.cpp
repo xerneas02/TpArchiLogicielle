@@ -1,5 +1,6 @@
 #include "grille.hpp"
 #include "mt.hpp"
+#include <math.h>
 #include <vector>
 
 Grille::Grille(int largeur, int hauteur, int nb_individus_max) : nb_individus(nb_individus_max), largeur(largeur), hauteur(hauteur) 

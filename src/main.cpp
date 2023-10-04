@@ -1,8 +1,10 @@
 #include "__base__.hpp"
-#include "Individu.hpp"
+#include "simulation.hpp"
 
-int main() 
+#if 0
+void test_mathis()
 {
+    //check(1+2+a+to);
     // Création d'un objet Individu avec des durées de vie initiales
     Individu individu(0, 0, 2, 3, 5);
     
@@ -45,6 +47,22 @@ int main()
     // Obtention du nouveau statut et de la durée de vie dans le statut actuel
     cout << "Nouveau statut : " << individu.getStatut() << endl;
     cout << "Temps passé dans le statut actuel : " << individu.getTempsPasseDansStatut() << " jours" << endl;
+}
+#endif
+
+void test_simulation()
+{
+    Simulation s = Simulation(64, 32, 360, 10);
+    s.simuler();
+}
+
+int main(int argc, char const* argv[]) 
+{
+    unused(argc);
+    unused(argv);
+    printf("%sCompilation%s de %s \n", COLOR_DEBUG_CATEGORY, COLOR_RESET, current_time);
+
+    test_simulation();
 
     return 0;
 }

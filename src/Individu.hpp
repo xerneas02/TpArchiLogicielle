@@ -19,6 +19,7 @@ ostream& operator<<(ostream& os, Statut statut);
 class Individu 
 {
     friend class Grille;
+    friend class Simulation;
 
 private:
     int x;
@@ -30,8 +31,9 @@ private:
     int dureesDeVie[4]; // Durées de vie des differents status
 
 public:
-    Individu(int x, int y, int dE, int dI, int dR);
+    Individu();
 
+    void reset(int dE, int dI, int dR);
 
     Statut getStatut() const;
     void setStatut(Statut nouveauStatut);

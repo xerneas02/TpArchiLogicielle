@@ -58,7 +58,7 @@ typedef double float64;
 
 typedef float  f32;
 typedef double f64;
-#define fmax double
+//#define fmax double
 
 #define f32_format  "f"
 #define f64_format  "lf"

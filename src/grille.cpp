@@ -51,7 +51,7 @@ int Grille::countAdj(int x, int y){
             int x_tore = (i + largeur) % largeur;
             int y_tore = (j + hauteur) % hauteur;
 
-            nVoisin += cellules[x][y].size();
+            nVoisin += cellules[x_tore][y_tore].size();
         }
     }
     return nVoisin;

@@ -55,7 +55,13 @@ void test_simulation()
 {
     //Simulation s = Simulation(64, 12, 96, 10);
     Simulation s = Simulation();
-    s.simuler();
+
+    repeat(i, 100)
+    {
+        s.simuler();
+        cout << "fin de la simulation " << i << endl;
+        s.reset();
+    }
 }
 
 int main(int argc, char const* argv[]) 

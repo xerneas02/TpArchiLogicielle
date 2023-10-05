@@ -14,11 +14,8 @@ Simulation::Simulation(int longueur, int hauteur, int nb_individus_max, int nb_i
     check(dI > 0);
     check(dR > 0);
 
-    const char* file_name = "resultat/resultat.csv";
-    remove(file_name);
-    result = fopen(file_name, "w+");
-    #define SEP ";"
-    if(result){ fprintf(result, "Susceptible" SEP "Exposed" SEP "Infected" SEP "Recovered\n"); }
+    simulation_nb = 0;
+    result = null;
 
     reset();
 }
@@ -30,8 +27,21 @@ Simulation::~Simulation()
 
 void Simulation::reset() 
 {
+    simulation_nb++;
     tour = 0;
     grid.reset(nb_individus_infected, dE, dI, dR);
+
+    if(result != null) { fclose(result); }
+
+
+    char file_name[128];
+    sprintf(file_name, "resultat/resultat_%i.csv", simulation_nb);
+
+    remove(file_name);
+
+    result = fopen((const char*)file_name, "w+");
+    #define SEP ";"
+    if(result){ fprintf(result, "Susceptible" SEP "Exposed" SEP "Infected" SEP "Recovered\n"); }
 }
 
 void Simulation::afficher()

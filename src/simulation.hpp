@@ -17,6 +17,8 @@ private:
     int dE = 3;
     int dI = 7;
     int dR = 365;
+
+    int simulation_nb;
     int tour;
     file* result;
 

@@ -25,7 +25,7 @@ void Individu::reset(int dE, int dI, int dR)
     statut               = Statut::Susceptible;
     setDureeDeVie(Statut::Susceptible, -1);
     setDureeDeVie(Statut::Exposed,    (int)mt_neg_exp(dE));
-    setDureeDeVie(Statut::Infected,   (int)mt_neg_exp(dI));
+    setDureeDeVie(Statut::Infected,   (int)mt_neg_exp(dI)); 
     setDureeDeVie(Statut::Recovered,  (int)mt_neg_exp(dR));
 }
 

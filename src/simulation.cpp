@@ -103,7 +103,6 @@ void Simulation::simuler(int nb_iteration)
 {
     repeat(i, nb_iteration)
     {
-        //afficher();
         fileSaveStep();
         tour++;
         grid.avanceTemps();

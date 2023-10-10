@@ -12,6 +12,7 @@ class Grille
 private:
     int nb_individus;
     Individu* individus;
+    int status_count[4];
 
     int longueur;
     int hauteur;

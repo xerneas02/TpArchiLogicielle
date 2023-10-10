@@ -39,15 +39,21 @@ void Grille::reset(int nb_infected, int dE, int dI, int dR)
             getCell(x,y).clear();
         }
     }
+
     repeat(i, nb_individus)
     {
         ajouterIndividu(i, rngX(), rngY());
         individus[i].reset(dE, dI, dR);
     }
+
     repeat(i, nb_infected)
     {
         individus[i].setStatut(Statut::Infected);
     }
+
+    repeat(i, 4){ status_count[i] = 0; }
+    status_count[(int)Statut::Susceptible] = nb_individus-nb_infected;
+    status_count[(int)Statut::Infected] = nb_infected;
 }
 
 Grille::~Grille() 
@@ -94,7 +100,7 @@ void Grille::deplacerIndividus()
         Individu& individu = individus[i];
 
         // Avancez le temps de l'individu
-        individu.avanceTemps();
+        individu.avanceTemps(*this);
         moveIndividuRngPos(i);
     }
 }
@@ -112,6 +118,8 @@ void Grille::propagation()
 
             if (proba > mt_genrand_real1())
             {
+                status_count[(int)Statut::Susceptible]--;
+                status_count[(int)Statut::Exposed]++;
                 individus[i].setStatut(Statut::Exposed);
             }
         }

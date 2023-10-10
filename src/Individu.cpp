@@ -1,4 +1,5 @@
 #include "individu.hpp"
+#include "grille.hpp"
 
 inline string statutToString(Statut statut) 
 {
@@ -44,13 +45,20 @@ int Individu::getTempsPasseDansStatut() const
     return tempsPasseDansStatut;
 }
 
-void Individu::avanceTemps()
+void Individu::avanceTemps(Grille& g)
 {
     tempsPasseDansStatut++;
 
     if (getDureeDeVie(statut) != -1 && tempsPasseDansStatut >= getDureeDeVie(statut))
     {
+        Statut oldStatut = statut;
         statut = statutSuivant(statut);
+
+        if(statut != oldStatut)
+        {
+            g.status_count[(int)oldStatut]--;
+            g.status_count[(int)statut]++;
+        }
         tempsPasseDansStatut = 0;
     }
 }

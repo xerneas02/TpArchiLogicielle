@@ -4,6 +4,8 @@
 #include "__base__.hpp"
 #include "mt.hpp"
 
+class Grille;
+
 // Déclaration de l'énumération pour le statut
 enum class Statut
 {
@@ -43,7 +45,7 @@ public:
     int getDureeDeVie(Statut statut) const;
     void setDureeDeVie(Statut statut, int duree);
 
-    void avanceTemps();
+    void avanceTemps(Grille& g);
 
 private:
     Statut statutSuivant(Statut s);

@@ -35,11 +35,12 @@ void Simulation::reset()
 
 
     char file_name[128];
-    sprintf(file_name, "resultat/resultat_%i.csv", simulation_nb);
+    sprintf(file_name, "resultat/10_octobre/resultat_%i.csv", simulation_nb);
 
     remove(file_name);
 
     result = fopen((const char*)file_name, "w+");
+    check(result != null);
     #define SEP ";"
     if(result){ fprintf(result, "Susceptible" SEP "Exposed" SEP "Infected" SEP "Recovered\n"); }
 }
@@ -91,12 +92,7 @@ void Simulation::afficher()
 void Simulation::fileSaveStep()
 {
     if(result == null){ return; }
-    int count[4] = {0,0,0,0};
-    repeat(i, grid.nb_individus)
-    {
-        count[(int)(grid.individus[i].getStatut())]++;
-    }
-    fprintf(result, "%i" SEP "%i" SEP "%i" SEP "%i\n", count[0], count[1], count[2], count[3]);
+    fprintf(result, "%i" SEP "%i" SEP "%i" SEP "%i\n", grid.status_count[0], grid.status_count[1], grid.status_count[2], grid.status_count[3]);
 }
 
 void Simulation::simuler(int nb_iteration)

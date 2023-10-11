@@ -95,9 +95,23 @@ void Grille::moveIndividuRngPos(int idx)
 
 void Grille::deplacerIndividus() 
 {
+    int nbVoisinInfected;
     repeat(i, nb_individus)
     {
         Individu& individu = individus[i];
+
+        if (individus[i].statut == Statut::Susceptible)
+        { 
+            nbVoisinInfected = countVoisinsInfectees(individus[i].x, individus[i].y);
+            auto proba   = 1 - exp(-0.5*nbVoisinInfected);
+
+            if (proba > mt_genrand_real1())
+            {
+                status_count[(int)Statut::Susceptible]--;
+                status_count[(int)Statut::Exposed]++;
+                individus[i].setStatut(Statut::Exposed);
+            }
+        }
 
         // Avancez le temps de l'individu
         individu.avanceTemps(*this);
@@ -111,18 +125,7 @@ void Grille::propagation()
 
     repeat(i, nb_individus)
     {
-        if (individus[i].statut == Statut::Susceptible)
-        { 
-            nbVoisinInfected = countVoisinsInfectees(individus[i].x, individus[i].y);
-            auto proba   = 1 - exp(-0.5*nbVoisinInfected);
-
-            if (proba > mt_genrand_real1())
-            {
-                status_count[(int)Statut::Susceptible]--;
-                status_count[(int)Statut::Exposed]++;
-                individus[i].setStatut(Statut::Exposed);
-            }
-        }
+        
     }
 }
 

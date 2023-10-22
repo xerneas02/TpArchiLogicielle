@@ -14,18 +14,17 @@ for i in range(1, 101):
         nGood += 1
         for j in range(730):
             res[j] = res[j].split(";")
+            #print(res[j] )
             
             for k in range(4):
+                #print(i, j, k)
                 result[j][k] += int(res[j][k])
 
 scv = "Susceptible;Exposed;Infected;Recovered\n"
 for i in range(1, 730):
     scv += f"{result[i][0]/nGood};{result[i][1]/nGood};{result[i][2]/nGood};{result[i][3]/nGood}\n"
 
-
-
-
-
+print(nGood, "good")
 
 file_res = open("resultat_mean.csv", "w")
 file_res.write(scv.replace(".", ","))

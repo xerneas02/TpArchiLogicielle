@@ -68,6 +68,7 @@ int main(int argc, char const* argv[])
 {
     unused(argc);
     unused(argv);
+
     printf("%sCompilation%s de %s \n", COLOR_DEBUG_CATEGORY, COLOR_RESET, current_time);
 
     unsigned long init[4]={0x123, 0x234, 0x345, 0x456}, length=4;

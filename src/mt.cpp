@@ -103,6 +103,8 @@ void mt_init_by_array(unsigned long init_key[], int key_length)
 /* generates a random number on [0,0xffffffff]-interval */
 unsigned long mt_genrand_int32(void)
 {
+    //return rand();
+    #if 1
     unsigned long y;
     static unsigned long mag01[2]={0x0UL, MATRIX_A};
     /* mag01[x] = x * MATRIX_A  for x=0,1 */
@@ -136,6 +138,7 @@ unsigned long mt_genrand_int32(void)
     y ^= (y >> 18);
 
     return y;
+    #endif
 }
 
 /* generates a random number on [0,0x7fffffff]-interval */

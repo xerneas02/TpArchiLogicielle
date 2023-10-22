@@ -26,3 +26,6 @@ g++ -Ofast src/*.cpp ./src/betterCPP/*.c* -o bin/main.exe -Wall -Wextra
 ```
 
 ![Graphique sans titre](https://cdn.discordapp.com/attachments/751057885730963578/1159233807975727175/image.png)
+
+
+Fait par Mathis R et Thomas T.

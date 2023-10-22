@@ -35,7 +35,7 @@ void Simulation::reset()
 
 
     char file_name[128];
-    sprintf(file_name, "resultat/sequence/resultat_%i.csv", simulation_nb);
+    sprintf(file_name, "resultat/11_octobre_contamination&deplacer/resultat_%i.csv", simulation_nb);
 
     remove(file_name);
 

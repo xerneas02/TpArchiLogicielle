@@ -54,6 +54,6 @@ A `resultat_mean.csv` file will be created inside the folder.
 The class diagram for the project look like :
 ![Le diagramme de classe](https://cdn.discordapp.com/attachments/751057885730963578/1165711737018925303/image.png)
 
-Made by Mathis R. et Thomas T.
+Made by Mathis R. and Thomas T.
 
 It take 2 minutes on my pc to generate the 100 files. (over 1.2s/file) - Thomas.

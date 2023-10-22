@@ -53,4 +53,5 @@ A `resultat_mean.csv` file will be created inside the folder.
 
 Made by Mathis R. et Thomas T.
 
-It take 2 minutes on my pc to generate the 100 files. - Thomas.
+It take 2 minutes on my pc to generate the 100 files. (over 1.2s/file)
+- Thomas.

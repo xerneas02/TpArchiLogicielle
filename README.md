@@ -3,13 +3,20 @@ Tp d'architecture logicielle sur le sujet : Modèle Toy case SEIR(Susceptible, E
 
 ## Compilation : 
 
+### Generate 100 files :
+
 - Place yourself at the parent folder of `src`
 - Don't forget to create a `bin` and `resultat` directory in the same folder as `src`
 
-Fast Compilation
+Fast Compilation :
 
 ```shell
 g++ -O1 src/*.cpp ./src/betterCPP/*.c* -o bin/main.exe -Wall -Wextra
+```
+Opimized Compilation :
+
+```shell
+g++ -Ofast src/*.cpp ./src/betterCPP/*.c* -o bin/main.exe -Wall -Wextra
 ```
 
 Run :
@@ -18,14 +25,32 @@ Run :
 ./bin/main.exe
 ```
 
+Current Save file are stored at `resultat/11_octobre_contamination&deplacer/...`
+This is hardcoded at file:line : `src/simulation.h:38`
 
-Opimized Compilation
+### Generate the mean in one file :
+
+Mathis made a python script to generate one file with the means of all the simulation.
+
+You can use it like this :
 
 ```shell
-g++ -Ofast src/*.cpp ./src/betterCPP/*.c* -o bin/main.exe -Wall -Wextra
+py .\resultat\gen_mean.py
+
 ```
 
-![Graphique sans titre](https://cdn.discordapp.com/attachments/751057885730963578/1159233807975727175/image.png)
+Then put the file name
+
+```shell
+Nom du dosier : 
+11_octobre_contamination&deplacer
+```
+
+A `resultat_mean.csv` file will be created inside the folder. 
+
+![Modèle épidémiologique SEIR](https://cdn.discordapp.com/attachments/751057885730963578/1165708275019415592/image.png)
 
 
-Fait par Mathis R et Thomas T.
+Made by Mathis R. et Thomas T.
+
+It take 2 minutes on my pc to generate the 100 files. - Thomas.

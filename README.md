@@ -56,5 +56,4 @@ The class diagram for the project look like :
 
 Made by Mathis R. et Thomas T.
 
-It take 2 minutes on my pc to generate the 100 files. (over 1.2s/file)
-- Thomas.
+It take 2 minutes on my pc to generate the 100 files. (over 1.2s/file) - Thomas.

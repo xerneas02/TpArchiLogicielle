@@ -1,10 +1,12 @@
+Il y a un `Jupyter Notebook` à jupyter/figures.ipynb
+
 # TpArchiLogicielle
 Tp d'architecture logicielle sur le sujet : Modèle Toy case SEIR(Susceptible, Exposed, Infected and Recovered) multi-agent
 
 PRNG used : Mersenne Twister generator by Makoto Matsumoto :
 http://www.math.sci.hiroshima-u.ac.jp/m-mat/MT/MT2002/emt19937ar.html
 
-## Compilation : 
+## Compilation :
 
 ### Generate 100 files :
 

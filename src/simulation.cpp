@@ -40,6 +40,12 @@ void Simulation::reset()
     remove(file_name);
 
     result = fopen((const char*)file_name, "w+");
+    if(result == null)
+    {
+        printf("file %s can't be created\n", file_name);
+        debug;
+        exit(42);
+    }
     check(result != null);
     #define SEP ";"
     if(result){ fprintf(result, "Susceptible" SEP "Exposed" SEP "Infected" SEP "Recovered\n"); }

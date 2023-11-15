@@ -74,14 +74,6 @@ int main(int argc, char const* argv[])
     unsigned long init[4]={0x123, 0x234, 0x345, 0x456}, length=4;
     mt_init_by_array(init, length);
 
-    // Consumming some mersenne twister rng input
-    // To have different result.
-    srand(time(NULL));
-    repeat(i, rand()%400)
-    { // consumming some mersenne twister rng input
-        mt_genrand_int32();
-    }
-
     test_simulation();
 
     printf("Done !");
